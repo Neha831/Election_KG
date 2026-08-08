@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <!-- Search Filters -->
+  <div class="card p-3 mb-4">
+    <h4>Search Filters</h4>
+
+    <div class="row">
+      <div class="col-md-3">
+        <label>District</label>
+        <select class="form-control">
+          <option>Select District</option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label>Taluka</label>
+        <select class="form-control">
+          <option>Select Taluka</option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label>Village</label>
+        <select class="form-control">
+          <option>Select Village</option>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <label>Institute</label>
+        <select class="form-control">
+          <option>Select Institute</option>
+        </select>
+      </div>
+
+      <div class="col-md-1 d-flex align-items-end">
+        <button class="btn btn-primary w-100">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
