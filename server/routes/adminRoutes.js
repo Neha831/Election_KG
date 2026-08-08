@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const Admin = require("../models/Admin");
+// const Admin = require("../models/Admin");
+const Admin = require("../models/admin");
 const Voter = require("../models/Voter");
 const { adminAuth, JWT_SECRET } = require("../middleware/adminAuth");
 
