@@ -478,3 +478,49 @@ table.results-table {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* ===== Mobile table: freeze Voter Name column, improve spacing ===== */
+@media (max-width: 768px) {
+  .app-main,
+  .page-content {
+    padding: 0 14px 40px;
+  }
+
+  .card {
+    padding: 18px 16px;
+  }
+
+  .results-table th,
+  .results-table td {
+    padding: 12px 16px;
+  }
+
+  .table-wrapper {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Freeze the Voter Name column so it stays visible while the rest
+     of the table scrolls horizontally underneath it. */
+  .results-table th.col-name,
+  .results-table td.col-name {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: #fff;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .results-table thead th.col-name {
+    background: #0b3d91;
+    z-index: 3;
+  }
+
+  .results-table tbody tr:hover td.col-name {
+    background: #f8fafc;
+  }
+
+  .results-table tbody tr.row-done td.col-name,
+  .results-table tbody tr.row-not-done td.col-name,
+  .results-table tbody tr.row-pending td.col-name {
+    background: #fff;
+  }
+}
