@@ -1,7 +1,4 @@
-// Run once to create your first admin account:
-//   node server/scripts/createAdmin.js <username> <password>
-//
-// Requires MONGO_URI in your .env (same as server.js).
+
 
 require("dotenv").config();
 const mongoose = require("mongoose");

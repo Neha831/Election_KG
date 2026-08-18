@@ -1,68 +1,30 @@
-
-
-import { SearchCheck, CalendarDays, Clock, User, ShieldCheck } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import "./header-additions.css";
+import chiefPhoto from "../assets/kg.png";
 
 export default function Header() {
-  const [time, setTime] = useState(new Date());
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const today = new Date().toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-
-  const currentTime = time.toLocaleTimeString("en-IN");
-
   return (
     <header className="header">
       <div className="header-inner">
-        {/* Left Side */}
         <div className="header-brand">
-          <div className="header-icon">
-            <SearchCheck size={26} />
+          <div className="header-title-group">
+            <h1 className="header-title">श्री. कौस्तुभ गावडे</h1>
+            {/* <p className="header-subtitle header-subtitle--role">
+              मुख्य कार्यकारी अधिकारी स्वामी विवेकानंद संस्था, कोल्हापूर
+            </p> */}
+            <p className="header-subtitle header-subtitle--candidate">
+              उमेदवार – पुणे विभाग
+            </p>
+<p className="header-subtitle header-subtitle--election">शिक्षक मतदारसंघ निवडणूक 2026</p>
+            <p className="header-subtitle header-subtitle--muted">
+              Voter Search Portal
+            </p>
           </div>
 
-          <h1 className="header-title">VOTER SEARCH PORTAL</h1>
-        </div>
-
-        {/* Right Side */}
-        <div className="header-right">
-          <div className="header-date">
-            <CalendarDays size={18} />
-            <span>Date : {today}</span>
+          <div className="header-photo">
+            <img src={chiefPhoto} alt="Shri Kaustubh Muralidhar Gavde" />
           </div>
-
-          <div className="header-time">
-            <Clock size={18} />
-            <span>Time : {currentTime}</span>
-          </div>
-
-          <div className="header-user">
-            <User size={22} />
-            <span>Admin</span>
-          </div>
-
-          <button
-            className="btn btn-navy header-admin-btn"
-            onClick={() => navigate("/admin/login")}
-          >
-            <ShieldCheck size={18} />
-            Admin
-          </button>
         </div>
       </div>
     </header>
   );
 }
-

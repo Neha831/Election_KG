@@ -1,0 +1,177 @@
+/* ===== Header — Solid blue theme, photo merged into background ===== */
+
+.header {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  padding: 0;
+  margin: 0;
+  background: #123a7c;
+  box-shadow: 0 10px 25px -8px rgba(18, 58, 124, 0.45);
+  max-width: 100%;
+  width: 100%;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+}
+
+.header-brand {
+  /* Single source of truth for the photo/text split — scales
+     continuously with viewport width instead of jumping between
+     fixed breakpoints, so there's no width where it can overflow. */
+  --photo-w: clamp(90px, 32vw, 560px);
+  --gap-pad: clamp(6px, 2vw, 22px);
+
+  display: flex;
+  align-items: stretch;        /* photo fills full row height, top to bottom, no gap */
+  position: relative;
+  min-height: clamp(110px, 28vw, 220px);
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.header-photo {
+  flex-shrink: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--photo-w);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+}
+
+.header-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  background: transparent;
+  margin: 0;
+}
+
+.header-title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  text-align: right;
+  gap: 6px;
+  color: #fff;
+  z-index: 2;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin-left: var(--photo-w);
+  padding: var(--gap-pad) var(--gap-pad) var(--gap-pad) 10px;
+  box-sizing: border-box;
+}
+
+.header-title {
+  font-size: clamp(13px, 4.6vw, 38px);
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  margin: 0;
+  line-height: 1.2;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  color: #fff;
+  max-width: 100%;
+}
+
+.header-subtitle {
+  font-size: clamp(8.5px, 2.5vw, 19px);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.95);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+/* "मुख्य कार्यकारी अधिकारी ... कोल्हापूर" — allow this one to wrap,
+   but break at word boundaries only so "कोल्हापूर" never splits mid-word. */
+.header-subtitle--role {
+  line-height: 1.35;
+  word-break: normal;
+  overflow-wrap: normal;
+  max-width: 100%;
+}
+
+/* "उमेदवार – पुणे विभाग" — short line, keep it on one line always.
+   Lower clamp minimum than the general subtitle so it still fits
+   the narrow title column on small phones without wrapping. */
+.header-subtitle--candidate {
+  white-space: nowrap;
+  font-size: clamp(7.5px, 2.3vw, 19px);
+}
+
+/* "शिक्षक मतदारसंघ निवडणूक 2026" — also keep on one line. */
+.header-subtitle--election {
+  white-space: nowrap;
+  font-size: clamp(7.5px, 2.2vw, 18px);
+}
+
+.header-subtitle--muted {
+  margin-top: clamp(18px, 5vw, 28px);
+  font-size: clamp(12px, 4.2vw, 32px);
+  font-weight: 900;
+  color: #ffd23f;
+  letter-spacing: 0.4px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* ===== Extra safety net for very narrow phones (≤340px) ===== */
+@media (max-width: 340px) {
+  .header-brand {
+    --photo-w: clamp(75px, 30vw, 110px);
+    min-height: 118px;
+  }
+  .header-title-group {
+    padding: 8px 8px 8px 6px;
+    gap: 2px;
+  }
+}
+
+/* ===== Admin button — rendered inline inside the "SEARCH FILTERS"
+   title row (see SearchFilters.jsx / .results-header). ===== */
+.header-admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  padding: clamp(5px, 1.5vw, 8px) clamp(10px, 3vw, 16px);
+  border-radius: 8px;
+  font-size: clamp(11.5px, 2.6vw, 14px);
+  font-weight: 700;
+  transition: filter 0.15s ease, transform 0.05s ease;
+  white-space: nowrap;
+}
+
+.header-admin-btn:hover {
+  filter: brightness(1.08);
+}
+
+.header-admin-btn:active {
+  transform: translateY(1px);
+}
+
