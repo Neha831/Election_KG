@@ -63,13 +63,11 @@ function StatusTable({ title, rows, labelHeader }) {
     </>
   );
 }
-
 const ROW_CLASS = {
   done: "row-done",
   not_done: "row-not-done",
   pending: "row-pending",
 };
-
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -1,4 +1,4 @@
-/* ===== Login page — exact banner replica, v11 (fluid, no breakpoint gaps) ===== */
+/* ===== Login page — Amazon-style fixed breakpoints, mobile-first ===== */
 
 * {
   box-sizing: border-box;
@@ -15,45 +15,68 @@
   max-width: 100%;
 }
 
-/* ---- Hero section ---- */
+/* ---- Hero section: mobile base = stacked column ---- */
 .login-hero {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: stretch;
   position: relative;
-  min-height: 640px;
+  min-height: unset;
   width: 100%;
   max-width: 100%;
+}
+@media (min-width: 900px) {
+  .login-hero {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 640px;
+  }
 }
 
 .hero-photo-wrap {
   position: relative;
-  flex: 0 0 46%;
-  max-width: 650px;
+  flex: none;
+  max-width: 100%;
+  height: 280px;
   overflow: hidden;
   background: transparent;
+}
+@media (min-width: 480px) {
+  .hero-photo-wrap {
+    height: 340px;
+  }
+}
+@media (min-width: 768px) {
+  .hero-photo-wrap {
+    height: 420px;
+  }
+}
+@media (min-width: 900px) {
+  .hero-photo-wrap {
+    flex: 0 0 46%;
+    max-width: 650px;
+    height: auto;
+  }
 }
 
 .hero-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 30% 35%;
+  object-position: 50% 22%;
   display: block;
   filter: contrast(1.08) saturate(1.1) brightness(1.02);
 
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    #000 82%,
-    rgba(0, 0, 0, 0.6) 92%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    90deg,
-    #000 82%,
-    rgba(0, 0, 0, 0.6) 92%,
-    transparent 100%
-  );
+  -webkit-mask-image: linear-gradient(180deg, #000 82%, rgba(0, 0, 0, 0.6) 92%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 82%, rgba(0, 0, 0, 0.6) 92%, transparent 100%);
+}
+@media (min-width: 900px) {
+  .hero-photo {
+    object-position: 30% 35%;
+    -webkit-mask-image: linear-gradient(90deg, #000 82%, rgba(0, 0, 0, 0.6) 92%, transparent 100%);
+    mask-image: linear-gradient(90deg, #000 82%, rgba(0, 0, 0, 0.6) 92%, transparent 100%);
+  }
 }
 
 .hero-photo-fade {
@@ -66,11 +89,23 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(16px, 4vw, 32px) clamp(12px, 5vw, 40px) clamp(20px, 5vw, 32px) clamp(6px, 2vw, 8px);
-  gap: clamp(12px, 2.5vw, 18px);
+  padding: 16px 12px 20px;
+  gap: 12px;
   min-width: 0;
   max-width: 100%;
   width: 100%;
+}
+@media (min-width: 576px) {
+  .hero-right {
+    padding: 20px 24px 24px;
+    gap: 14px;
+  }
+}
+@media (min-width: 900px) {
+  .hero-right {
+    padding: 24px 40px 32px 8px;
+    gap: 18px;
+  }
 }
 
 .hero-heading {
@@ -80,7 +115,7 @@
 }
 
 .hero-name {
-  font-size: clamp(1.15rem, 5.5vw, 2.5rem);
+  font-size: 1.3rem;
   font-weight: 800;
   color: #0b2f6b;
   margin: 0 0 4px;
@@ -89,13 +124,38 @@
   overflow-wrap: break-word;
   word-break: break-word;
 }
+@media (min-width: 576px) {
+  .hero-name {
+    font-size: 1.8rem;
+  }
+}
+@media (min-width: 768px) {
+  .hero-name {
+    font-size: 2.2rem;
+  }
+}
+@media (min-width: 1024px) {
+  .hero-name {
+    font-size: 2.5rem;
+  }
+}
 
 .hero-sub {
-  font-size: clamp(0.78rem, 2.6vw, 1.1rem);
+  font-size: 0.85rem;
   font-weight: 600;
   color: #123b82;
   margin: 2px 0;
   overflow-wrap: break-word;
+}
+@media (min-width: 576px) {
+  .hero-sub {
+    font-size: 0.95rem;
+  }
+}
+@media (min-width: 768px) {
+  .hero-sub {
+    font-size: 1.1rem;
+  }
 }
 
 .hero-year {
@@ -109,20 +169,40 @@
   max-width: 400px;
   background: #f5f9ff;
   border-radius: 16px;
-  padding: clamp(16px, 4vw, 26px) clamp(14px, 4vw, 24px) clamp(14px, 3.5vw, 22px);
+  padding: 18px 16px 16px;
   box-shadow: 0 18px 40px rgba(11, 47, 107, 0.25);
   overflow: hidden;
   min-width: 0;
+}
+@media (min-width: 576px) {
+  .login-card {
+    padding: 22px 20px 18px;
+  }
+}
+@media (min-width: 768px) {
+  .login-card {
+    padding: 26px 24px 22px;
+  }
 }
 
 .login-card-title {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: clamp(0.95rem, 3vw, 1.25rem);
+  font-size: 1rem;
   font-weight: 800;
   color: #0b2f6b;
   margin: 0 0 18px;
+}
+@media (min-width: 576px) {
+  .login-card-title {
+    font-size: 1.1rem;
+  }
+}
+@media (min-width: 768px) {
+  .login-card-title {
+    font-size: 1.25rem;
+  }
 }
 
 .login-form {
@@ -143,24 +223,41 @@
 
 .field-icon-svg {
   position: absolute;
-  left: clamp(11px, 3vw, 15px);
+  left: 12px;
   top: 50%;
   transform: translateY(-50%);
   color: #8a8a8a;
   pointer-events: none;
+}
+@media (min-width: 576px) {
+  .field-icon-svg {
+    left: 15px;
+  }
 }
 
 .field-icon input {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  padding: clamp(11px, 3vw, 14px) clamp(12px, 3vw, 15px) clamp(11px, 3vw, 14px) clamp(36px, 9vw, 44px);
+  padding: 12px 12px 12px 38px;
   border-radius: 8px;
   border: 1px solid #dde3ee;
   background: #fff;
-  font-size: clamp(0.85rem, 2.6vw, 0.96rem);
+  font-size: 0.88rem;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
+}
+@media (min-width: 576px) {
+  .field-icon input {
+    padding: 13px 14px 13px 42px;
+    font-size: 0.92rem;
+  }
+}
+@media (min-width: 768px) {
+  .field-icon input {
+    padding: 14px 15px 14px 44px;
+    font-size: 0.96rem;
+  }
 }
 
 .field-icon input::placeholder {
@@ -187,17 +284,29 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: clamp(11px, 3vw, 14px);
+  padding: 12px;
   border: none;
   border-radius: 8px;
   background: linear-gradient(135deg, #3b82f6, #123b82);
   color: #fff;
   font-weight: 700;
-  font-size: clamp(0.85rem, 2.8vw, 1rem);
+  font-size: 0.9rem;
   cursor: pointer;
   box-shadow: 0 8px 18px rgba(18, 59, 130, 0.35);
   transition: transform 0.12s, box-shadow 0.12s;
   margin-top: 2px;
+}
+@media (min-width: 576px) {
+  .btn-login {
+    padding: 13px;
+    font-size: 0.95rem;
+  }
+}
+@media (min-width: 768px) {
+  .btn-login {
+    padding: 14px;
+    font-size: 1rem;
+  }
 }
 
 .btn-login:hover {
@@ -227,22 +336,43 @@
 .login-footer {
   position: relative;
   background: linear-gradient(90deg, #0b2f6b, #123b82);
-  padding: clamp(14px, 3.5vw, 20px) clamp(14px, 6vw, 48px) clamp(16px, 3.5vw, 22px);
+  padding: 14px 14px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: 14px;
   border-top-left-radius: 40% 60px;
   border-top-right-radius: 40% 60px;
   max-width: 100%;
 }
+@media (min-width: 576px) {
+  .login-footer {
+    padding: 16px 24px 18px;
+    gap: 18px;
+  }
+}
+@media (min-width: 768px) {
+  .login-footer {
+    padding: 20px 48px 22px;
+  }
+}
 
 .footer-icons {
   display: flex;
-  gap: clamp(16px, 4vw, 30px);
+  gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
+}
+@media (min-width: 576px) {
+  .footer-icons {
+    gap: 24px;
+  }
+}
+@media (min-width: 768px) {
+  .footer-icons {
+    gap: 30px;
+  }
 }
 
 .footer-icon-item {
@@ -251,13 +381,23 @@
   align-items: center;
   gap: 6px;
   color: #fff;
-  font-size: clamp(0.68rem, 2vw, 0.8rem);
+  font-size: 0.68rem;
   font-weight: 600;
+}
+@media (min-width: 576px) {
+  .footer-icon-item {
+    font-size: 0.74rem;
+  }
+}
+@media (min-width: 768px) {
+  .footer-icon-item {
+    font-size: 0.8rem;
+  }
 }
 
 .footer-icon-circle {
-  width: clamp(34px, 8vw, 42px);
-  height: clamp(34px, 8vw, 42px);
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: hsl(210, 85%, 55%);
   display: flex;
@@ -266,15 +406,37 @@
   color: #fff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
+@media (min-width: 576px) {
+  .footer-icon-circle {
+    width: 38px;
+    height: 38px;
+  }
+}
+@media (min-width: 768px) {
+  .footer-icon-circle {
+    width: 42px;
+    height: 42px;
+  }
+}
 
 .footer-quote {
   color: #eaf1ff;
   font-weight: 600;
-  font-size: clamp(0.74rem, 2.2vw, 0.9rem);
+  font-size: 0.74rem;
   line-height: 1.5;
   text-align: right;
   max-width: 360px;
   overflow-wrap: break-word;
+}
+@media (min-width: 576px) {
+  .footer-quote {
+    font-size: 0.82rem;
+  }
+}
+@media (min-width: 768px) {
+  .footer-quote {
+    font-size: 0.9rem;
+  }
 }
 
 .quote-mark {
@@ -283,51 +445,9 @@
   vertical-align: middle;
 }
 
-/* ---- Tablet: real layout change (row → column), kept as a breakpoint
-   since this is structural, not just sizing ---- */
-@media (max-width: 900px) {
-  .login-hero {
-    flex-direction: column;
-    align-items: stretch;
-    min-height: unset;
-  }
-
-  .hero-photo-wrap {
-    flex: none;
-    max-width: 100%;
-    height: clamp(280px, 55vw, 470px);
-  }
-
-  .hero-photo {
-    object-position: 50% 22%;
-    -webkit-mask-image: linear-gradient(
-      180deg,
-      #000 82%,
-      rgba(0, 0, 0, 0.6) 92%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      180deg,
-      #000 82%,
-      rgba(0, 0, 0, 0.6) 92%,
-      transparent 100%
-    );
-  }
-
-  .hero-right {
-    align-items: center;
-    width: 100%;
-  }
-
-  .hero-heading {
-    text-align: center;
-    max-width: 100%;
-  }
-}
-
 /* Short-height screens (landscape phones, small laptops) */
-@media (max-height: 640px) and (max-width: 900px) {
+@media (max-height: 640px) and (max-width: 899px) {
   .hero-photo-wrap {
-    height: clamp(220px, 40vh, 340px);
+    height: 220px;
   }
 }
