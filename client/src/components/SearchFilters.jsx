@@ -72,7 +72,7 @@ export default function SearchFilters({ onSearch }) {
           </select>
         </div>
 
-        <div className="field">
+        {/* <div className="field">
           <label>तालुका (Taluka)</label>
           <select value={taluka} onChange={(e) => setTaluka(e.target.value)}>
             <option value="">-- All --</option>
@@ -80,7 +80,25 @@ export default function SearchFilters({ onSearch }) {
               <option key={t} value={t}>{t}</option>
             ))}
           </select>
-        </div>
+        </div> */}
+
+
+
+
+        <SearchableDropdown
+          label="तालुका (Taluka)"
+          value={taluka}
+          onChange={setTaluka}
+          options={talukas}
+        />
+
+
+
+
+
+
+
+
 
         <SearchableDropdown
           label="गाव (Village)"

@@ -404,7 +404,7 @@ table.results-table {
   border-collapse: collapse;
   font-size: 12px;
   table-layout: fixed;
-  min-width: 900px;
+  min-width: 760px;
 }
 @media (min-width: 768px) {
   table.results-table {
@@ -544,6 +544,25 @@ table.results-table {
   .results-table tbody tr.row-not-done td.col-name,
   .results-table tbody tr.row-pending td.col-name {
     background: #fff;
+  }
+}
+
+/* ===== Fix: col-narrow was referenced in JSX but never defined outside
+   @media print, so with table-layout:fixed those columns (Village,
+   Voting Taluka, Age, Gen) were splitting whatever pixels were left
+   over - causing the letter-by-letter wrapping. Table stays a table
+   at every screen size; on narrow screens it scrolls horizontally via
+   .table-wrapper (overflow-x: auto) with the Voter Name column
+   staying pinned via the sticky rule further down. ===== */
+.col-narrow {
+  width: 90px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (min-width: 768px) {
+  .col-narrow {
+    width: 100px;
   }
 }
 
@@ -825,9 +844,6 @@ table.results-table {
   text-align: center;
 }
 
-/* ========================================================================
-   PRINT
-   ======================================================================== */
 /* ========================================================================
    PRINT
    ======================================================================== */
