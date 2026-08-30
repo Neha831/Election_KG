@@ -874,9 +874,18 @@ table.results-table {
     object-fit: cover;
     flex-shrink: 0;
   }
+  /* FIX (name cut off at the top when printing): no line-height was
+     set, so it fell back to the browser default (~1.15), which isn't
+     enough vertical room for Devanagari marks that sit above the main
+     letter (e.g. the stroke in ी/ौ, or conjuncts like श्री). That's
+     what was slicing the top off "श्री. कौस्तुभ मुरलीधर गावडे". Added
+     line-height + a little top padding so nothing above the baseline
+     gets clipped by the line box. */
   .print-header-name {
     font-size: 22px;
     font-weight: 800;
+    line-height: 1.5;
+    padding-top: 4px;
     margin: 0 0 4px;
     color: #0b2e6b;
     white-space: normal;
@@ -884,9 +893,9 @@ table.results-table {
   .print-header-sub {
     font-size: 15px;
     font-weight: 600;
+    line-height: 1.5;
     margin: 0;
     color: #1d4ed8;
-    line-height: 1.4;
     white-space: normal;
   }
   * {

@@ -1,5 +1,3 @@
-
-
 const express = require("express");
 const ExcelJS = require("exceljs");
 const PDFDocument = require("pdfkit");
@@ -12,7 +10,7 @@ function buildFilter(query) {
   const { district, taluka, village, institute, q } = query;
   const filter = {};
   if (district) filter.district = district;
-  if (taluka) filter.taluka = taluka;
+  if (taluka) filter.taluka = taluka; // dropdown filters by Institute Taluka
   if (village) filter.village = village;
   if (institute) filter.institute = institute;
   if (q) filter.electorName = { $regex: q, $options: "i" };
@@ -117,12 +115,14 @@ router.get("/voters/export/excel", adminAuth, async (req, res) => {
       { header: "Voter Name", key: "electorName", width: 28 },
       { header: "Mobile No", key: "mobileNo", width: 16 },
       { header: "District", key: "district", width: 18 },
-      { header: "Taluka", key: "taluka", width: 18 },
+      { header: "Institute Taluka", key: "taluka", width: 18 },
+      { header: "Voting Taluka", key: "votingTaluka", width: 18 },
       { header: "Village", key: "village", width: 18 },
       { header: "Institute Name", key: "institute", width: 32 },
       { header: "Address", key: "address", width: 36 },
       { header: "Status", key: "status", width: 14 },
     ];
+
     sheet.getRow(1).fill = {
       type: "pattern",
       pattern: "solid",
@@ -183,21 +183,22 @@ router.get("/voters/export/pdf", adminAuth, async (req, res) => {
       .text("Voter Search Portal - Results", { align: "center" });
     doc.moveDown();
 
-    const colX = [40, 90, 140, 320, 420, 490, 560, 650, 720];
+    const colX = [40, 90, 140, 320, 420, 490, 560, 630, 700, 780];
     const headers = [
       "Part",
       "Sr.",
       "Voter Name",
       "Mobile No",
       "District",
-      "Taluka",
+      "Inst. Taluka",
+      "Voting Taluka",
       "Village",
       "Institute",
       "Status",
     ];
 
     doc.fontSize(9).fillColor("#ffffff");
-    doc.rect(40, doc.y, 720, 20).fill("#0B2E6B");
+    doc.rect(40, doc.y, 760, 20).fill("#0B2E6B");
     doc.fillColor("#ffffff");
     let y = doc.y - 15;
     headers.forEach((h, i) => doc.text(h, colX[i], y));
@@ -212,9 +213,10 @@ router.get("/voters/export/pdf", adminAuth, async (req, res) => {
       doc.text(v.mobileNo || "-", colX[3], rowY);
       doc.text(v.district, colX[4], rowY);
       doc.text(v.taluka, colX[5], rowY);
-      doc.text(v.village, colX[6], rowY);
-      doc.text(v.institute, colX[7], rowY);
-      doc.text(v.status || "pending", colX[8], rowY);
+      doc.text(v.votingTaluka, colX[6], rowY);
+      doc.text(v.village, colX[7], rowY);
+      doc.text(v.institute, colX[8], rowY);
+      doc.text(v.status || "pending", colX[9], rowY);
       doc.moveDown();
     });
 
