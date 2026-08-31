@@ -190,9 +190,19 @@ export default function SearchResults({
     });
   };
 
-  const sortIconFor = (key) => {
-    if (sortConfig.key !== key) return ArrowUpDown;
-    return sortConfig.direction === "asc" ? ArrowUp : ArrowDown;
+  // Renders the sort icon JSX directly (rather than returning a component
+  // reference to be used as a JSX tag) - React's dev-mode checker flags
+  // dynamically-picked component references used as tags with "Cannot
+  // create components during render", even when the underlying component
+  // is one of the existing imported icons. Returning the element itself
+  // avoids that entirely.
+  const renderSortIcon = (key, style) => {
+    if (sortConfig.key !== key) return <ArrowUpDown size={14} style={style} />;
+    return sortConfig.direction === "asc" ? (
+      <ArrowUp size={14} style={style} />
+    ) : (
+      <ArrowDown size={14} style={style} />
+    );
   };
 
   const sortableHeaderProps = (key) => ({
@@ -392,9 +402,6 @@ export default function SearchResults({
     }
   };
 
-  const NameSortIcon = sortIconFor("electorName");
-  const InstituteSortIcon = sortIconFor("institute");
-
   return (
     <section className="card results-card">
       {/* Print-only header - hidden on screen, shown at the top of the
@@ -470,14 +477,16 @@ export default function SearchResults({
                   }}
                 >
                   Voter Name
-                  <NameSortIcon
-                    size={14}
-                    style={{ opacity: sortConfig.key === "electorName" ? 1 : 0.4 }}
-                  />
+                  {renderSortIcon("electorName", {
+                    opacity: sortConfig.key === "electorName" ? 1 : 0.4,
+                  })}
                 </span>
               </th>
               <th className="col-mobile">Mobile No.</th>
-              <th className="col-institute" {...sortableHeaderProps("institute")}>
+              <th
+                className="col-institute"
+                {...sortableHeaderProps("institute")}
+              >
                 <span
                   style={{
                     display: "inline-flex",
@@ -486,10 +495,9 @@ export default function SearchResults({
                   }}
                 >
                   Institute Name
-                  <InstituteSortIcon
-                    size={14}
-                    style={{ opacity: sortConfig.key === "institute" ? 1 : 0.4 }}
-                  />
+                  {renderSortIcon("institute", {
+                    opacity: sortConfig.key === "institute" ? 1 : 0.4,
+                  })}
                 </span>
               </th>
               <th className="col-narrow">Village</th>

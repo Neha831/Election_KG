@@ -26,24 +26,36 @@ export default function Dashboard() {
   );
   const hasActiveFilter = Object.keys(cleanFilters).length > 0;
 
-  // handleSearch just records the requested filters. The actual fetch
-  // happens in the effect below, gated on hasActiveFilter, so a blank
-  // search (e.g. the automatic one SearchFilters fires on mount) never
-  // hits the API and never tries to pull down the whole dataset.
+  // handleSearch records the requested filters. When the new filters are
+  // all blank (e.g. the automatic search SearchFilters fires on mount, or
+  // the user clears the form), the reset is done right here in the event
+  // handler rather than in the effect below - calling setState
+  // synchronously inside an effect body causes an extra cascading render,
+  // which the react-hooks/set-state-in-effect rule flags. Doing it here
+  // means the effect only ever calls setState after real async work (the
+  // fetch itself).
   const handleSearch = (activeFilters) => {
     setSearched(true);
+
+    const cleaned = Object.fromEntries(
+      Object.entries(activeFilters).filter(([, v]) => v),
+    );
+    if (Object.keys(cleaned).length === 0) {
+      // Bump the id so any response from a request still in flight gets
+      // ignored when it eventually arrives, and cancel it outright.
+      requestIdRef.current += 1;
+      if (abortRef.current) abortRef.current.abort();
+      setVoters([]);
+      setLoading(false);
+    }
+
     setFilters(activeFilters);
   };
 
   useEffect(() => {
-    if (!hasActiveFilter) {
-      // Bump the id so any response from a request started just before
-      // filters were cleared gets ignored when it eventually arrives.
-      requestIdRef.current += 1;
-      setVoters([]);
-      setLoading(false);
-      return;
-    }
+    // The "no active filter" case is handled synchronously in
+    // handleSearch above - nothing to do here.
+    if (!hasActiveFilter) return;
 
     // Cancel any request still in flight from a previous filter change.
     if (abortRef.current) abortRef.current.abort();
@@ -52,6 +64,13 @@ export default function Dashboard() {
 
     const requestId = ++requestIdRef.current;
 
+    // This is the canonical "fetching data" effect pattern (see
+    // https://react.dev/learn/you-might-not-need-an-effect#fetching-data) -
+    // setLoading(true) has to fire synchronously as the fetch starts so the
+    // UI shows a spinner immediately. There's no event handler to move this
+    // into: the fetch is triggered by cleanFilters changing, which can come
+    // from more than just a direct user click.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     api
       .searchVoters(cleanFilters, controller.signal)
